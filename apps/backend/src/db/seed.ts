@@ -3,10 +3,10 @@ import { db, sql } from './connection.ts';
 import { schema } from './schema/index.ts';
 
 // Reset the database
-await reset(db, { schema });
+await reset(db, schema);
 
 // Seed the database
-await seed(db, { schema }).refine((f) => {
+await seed(db, schema).refine((f) => {
   return {
     rooms: {
       count: 20,

@@ -1,0 +1,2 @@
+### Get rooms
+GET http://localhost:3333/rooms

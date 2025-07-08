@@ -5,7 +5,9 @@
     "prepare": "husky",
     "dev": "pnpm run /^dev:/",
     "dev:backend": "pnpm run --filter backend dev",
-    "start:backend": "pnpm run --filter backend start"
+    "start:backend": "pnpm run --filter backend start",
+    "format": "biome check --write --unsafe",
+    "lint": "biome check"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.0.6",

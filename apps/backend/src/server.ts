@@ -9,9 +9,7 @@ const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>()
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
-app.register(fastifyCors, {
-  origin: 'http://localhost:3333'
-})
+app.register(fastifyCors, { origin: '*' })
 app.get('/', () => {
   return 'Hello World!'
 })

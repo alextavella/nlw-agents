@@ -1,2 +1,5 @@
+### Variables
+@baseUrl = http://localhost:3333
+
 ### Get rooms
-GET http://localhost:3333/rooms
+GET {{baseUrl}}/rooms

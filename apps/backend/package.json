@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node --env-file .env --experimental-strip-types --no-warnings --watch src/server.ts",
     "start": "node --env-file .env --experimental-strip-types --no-warnings src/server.ts",
+    "format": "biome check --write --unsafe",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

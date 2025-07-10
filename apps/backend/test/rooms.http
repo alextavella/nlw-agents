@@ -4,7 +4,7 @@
 
 ### Get rooms
 # @name getRooms
-GET {{baseUrl}}/rooms
+GET {{baseUrl}}/rooms?page=1&limit=5
 
 ### Create room
 # @name createRoom

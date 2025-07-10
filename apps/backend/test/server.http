@@ -1,2 +1,2 @@
-### Hello World
-GET http://localhost:3333/
+### Health check
+GET http://localhost:3333/health

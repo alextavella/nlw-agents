@@ -6,7 +6,6 @@ import { ROOMS_QUERY_KEY } from './use-rooms'
 
 export function useCreateRoom() {
   const createRoom = useMutation({
-    mutationKey: ['create-room'],
     mutationFn: async (data: CreateRoomRequest) => {
       return await api
         .post<CreateRoomResponse>('/rooms', {

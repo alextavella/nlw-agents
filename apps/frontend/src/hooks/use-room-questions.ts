@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import type { GetRoomQuestionsResponse, RoomQuestion } from '@/domain/room.types'
+import type { GetRoomQuestionsResponse, RoomQuestion } from '@/domain/question.types'
 import { api } from '@/lib/api'
 
 export const ROOMS_QUESTIONS_QUERY_KEY = 'get-room-questions'

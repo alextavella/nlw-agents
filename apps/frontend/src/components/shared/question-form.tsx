@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
+import { useCreateQuestion } from '@/hooks/use-create-question'
 
 // Esquema de validação no mesmo arquivo conforme solicitado
 const createQuestionSchema = z.object({
@@ -22,6 +23,8 @@ interface QuestionFormProps {
 }
 
 export function QuestionForm({ roomId }: QuestionFormProps) {
+  const { createQuestion, isLoading } = useCreateQuestion(roomId)
+
   const form = useForm<CreateQuestionFormData>({
     resolver: zodResolver(createQuestionSchema),
     defaultValues: {
@@ -29,9 +32,9 @@ export function QuestionForm({ roomId }: QuestionFormProps) {
     }
   })
 
-  function handleCreateQuestion(data: CreateQuestionFormData) {
-    // biome-ignore lint/suspicious/noConsole: dev
-    console.log(data, roomId)
+  async function handleCreateQuestion(data: CreateQuestionFormData) {
+    await createQuestion({ question: data.question })
+    form.reset()
   }
 
   return (
@@ -50,14 +53,21 @@ export function QuestionForm({ roomId }: QuestionFormProps) {
                 <FormItem>
                   <FormLabel>Sua Pergunta</FormLabel>
                   <FormControl>
-                    <Textarea className="min-h-[100px]" placeholder="O que você gostaria de saber?" {...field} />
+                    <Textarea
+                      className="min-h-[100px]"
+                      disabled={isLoading}
+                      placeholder="O que você gostaria de saber?"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit">Enviar pergunta</Button>
+            <Button disabled={isLoading} type="submit">
+              Enviar pergunta
+            </Button>
           </form>
         </Form>
       </CardContent>

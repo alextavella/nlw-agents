@@ -1,4 +1,4 @@
-import { and, eq, sql } from 'drizzle-orm'
+import { and, desc, eq, gt, sql } from 'drizzle-orm'
 import type { FastifyInstance, RouteShorthandOptions } from 'fastify'
 import { z } from 'zod/v4'
 import { db } from '../../db/connection.ts'
@@ -29,7 +29,7 @@ export const createQuestionRoute = (app: FastifyInstance) => {
 
     const embeddings = await generateEmbeddings(question)
     const embeddingsAsString = `[${embeddings.join(',')}]`
-    const similarity = sql<number>`1 - (${schema.audioChunks.embeddings} <=> ${embeddingsAsString}::vector)`
+    const similarity = sql<number>`1 - (${schema.audioChunks.embeddings}::vector <=> ${embeddingsAsString})`
 
     const audioChunks = await db
       .select({
@@ -38,13 +38,8 @@ export const createQuestionRoute = (app: FastifyInstance) => {
         similarity
       })
       .from(schema.audioChunks)
-      .where(
-        and(
-          eq(schema.audioChunks.roomId, roomId),
-          sql`1 - (${schema.audioChunks.embeddings} <=> ${embeddingsAsString}::vector) > 0.7`
-        )
-      )
-      .orderBy(sql`1 - (${schema.audioChunks.embeddings} <=> ${embeddingsAsString}::vector) desc`)
+      .where(and(eq(schema.audioChunks.roomId, roomId), gt(similarity, 0.7)))
+      .orderBy((t) => desc(t.similarity))
       .limit(3)
 
     let answer = ''
@@ -68,6 +63,6 @@ export const createQuestionRoute = (app: FastifyInstance) => {
       return reply.status(400).send({ error: 'Failed to create new question' })
     }
 
-    return reply.status(201).send({ id: insertedQuestion.id })
+    return reply.status(201).send({ id: insertedQuestion.id, question, answer })
   })
 }

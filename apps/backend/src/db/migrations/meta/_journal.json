@@ -15,6 +15,13 @@
       "when": 1752084530588,
       "tag": "0001_loose_morph",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752185757673,
+      "tag": "0002_deep_supreme_intelligence",
+      "breakpoints": true
     }
   ]
 }

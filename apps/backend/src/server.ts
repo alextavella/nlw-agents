@@ -1,4 +1,5 @@
 import { fastifyCors } from '@fastify/cors'
+import { fastifyMultipart } from '@fastify/multipart'
 import { fastify } from 'fastify'
 import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fastify-type-provider-zod'
 import { env } from './env.ts'
@@ -10,6 +11,7 @@ app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
 app.register(fastifyCors, { origin: '*' })
+app.register(fastifyMultipart, { limits: { fileSize: 1024 * 1024 * 50 } })
 app.register(registerRoutes)
 
 app.get('/health', () => {

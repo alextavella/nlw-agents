@@ -1,7 +1,11 @@
 import { fastifyCors } from '@fastify/cors'
 import { fastifyMultipart } from '@fastify/multipart'
 import { fastify } from 'fastify'
-import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fastify-type-provider-zod'
+import {
+  serializerCompiler,
+  validatorCompiler,
+  type ZodTypeProvider
+} from 'fastify-type-provider-zod'
 import { env } from './env.ts'
 import { registerRoutes } from './routes.ts'
 

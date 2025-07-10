@@ -1,0 +1,1 @@
+CREATE INDEX "cosine_index" ON "audio_chunks" USING hnsw ("embeddings" vector_cosine_ops);

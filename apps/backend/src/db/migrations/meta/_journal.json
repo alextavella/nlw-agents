@@ -22,6 +22,20 @@
       "when": 1752185757673,
       "tag": "0002_deep_supreme_intelligence",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1752189781246,
+      "tag": "0003_outstanding_warpath",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752189997031,
+      "tag": "0004_certain_marten_broadcloak",
+      "breakpoints": true
     }
   ]
 }

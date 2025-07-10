@@ -6,6 +6,10 @@
 # @name getRooms
 GET {{baseUrl}}/rooms?page=1&limit=5
 
+### Get room
+# @name getRoom
+GET {{baseUrl}}/rooms/{{roomId}}
+
 ### Create room
 # @name createRoom
 POST {{baseUrl}}/rooms

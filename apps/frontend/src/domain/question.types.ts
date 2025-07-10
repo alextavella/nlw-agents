@@ -14,4 +14,6 @@ export type CreateRoomQuestionRequest = {
 
 export type CreateRoomQuestionResponse = {
   id: string
+  question: string
+  answer?: string
 }

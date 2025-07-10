@@ -4,16 +4,21 @@ import { z } from 'zod/v4'
 import { db } from '../../db/connection.ts'
 import { schema } from '../../db/schema/index.ts'
 
-export const getRoomQuestionsRoute = (app: FastifyInstance) => {
-  const opts: RouteShorthandOptions = {
-    schema: {
-      params: z.object({
-        roomId: z.string()
-      })
-    }
+const paramsSchema = z.object({
+  roomId: z.string()
+})
+
+type ParamsSchema = z.infer<typeof paramsSchema>
+
+const opts: RouteShorthandOptions = {
+  schema: {
+    params: paramsSchema
   }
+}
+
+export const getRoomQuestionsRoute = (app: FastifyInstance) => {
   app.get('/rooms/:roomId/questions', opts, async (request, reply) => {
-    const { roomId } = request.params as { roomId: string }
+    const { roomId } = request.params as ParamsSchema
 
     const result = await db
       .select({

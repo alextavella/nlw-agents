@@ -17,3 +17,13 @@ export type CreateRoomRequest = {
 export type CreateRoomResponse = {
   id: string
 }
+
+export type RoomQuestion = {
+  id: string
+  question: string
+  createdAt: string
+}
+
+export type GetRoomQuestionsResponse = {
+  questions: RoomQuestion[]
+}

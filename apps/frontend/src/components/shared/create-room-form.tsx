@@ -3,7 +3,14 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useCreateRoom } from '@/hooks/use-create-room'
 
@@ -65,7 +72,12 @@ export function CreateRoomForm() {
                 <FormItem>
                   <FormLabel>Descrição da sala</FormLabel>
                   <FormControl>
-                    <Input disabled={isLoading} placeholder="Descrição da sala" type="text" {...field} />
+                    <Input
+                      disabled={isLoading}
+                      placeholder="Descrição da sala"
+                      type="text"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

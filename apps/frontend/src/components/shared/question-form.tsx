@@ -3,7 +3,14 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateQuestion } from '@/hooks/use-create-question'
 
@@ -41,7 +48,9 @@ export function QuestionForm({ roomId }: QuestionFormProps) {
     <Card>
       <CardHeader>
         <CardTitle>Fazer uma Pergunta</CardTitle>
-        <CardDescription>Digite sua pergunta abaixo para receber uma resposta gerada por I.A.</CardDescription>
+        <CardDescription>
+          Digite sua pergunta abaixo para receber uma resposta gerada por I.A.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>

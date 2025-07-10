@@ -29,7 +29,9 @@ export function QuestionItem({ question }: QuestionItemProps) {
             </div>
             <div className="flex-1">
               <p className="mb-1 font-medium text-foreground">Pergunta</p>
-              <p className="whitespace-pre-line text-muted-foreground text-sm leading-relaxed">{question.question}</p>
+              <p className="whitespace-pre-line text-muted-foreground text-sm leading-relaxed">
+                {question.question}
+              </p>
             </div>
           </div>
 

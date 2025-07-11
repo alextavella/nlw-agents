@@ -15,21 +15,9 @@ export function RecordRoomAudio() {
   const [audioChunks, setAudioChunks] = useState<Blob[]>([])
 
   const mediaRecorder = useRef<MediaRecorder | null>(null)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  const startRecording = async () => {
-    if (!isRecordingSupported) {
-      alert('Não é possível gravar áudio nesse navegador')
-      return
-    }
-
-    const audio = await navigator.mediaDevices.getUserMedia({
-      audio: {
-        echoCancellation: true,
-        noiseSuppression: true,
-        sampleRate: 44_100
-      }
-    })
-
+  function createRecorder(audio: MediaStream) {
     mediaRecorder.current = new MediaRecorder(audio, {
       mimeType: 'audio/webm',
       audioBitsPerSecond: 64_000
@@ -44,24 +32,50 @@ export function RecordRoomAudio() {
     mediaRecorder.current.start()
   }
 
-  const stopRecording = async () => {
+  async function startRecording() {
+    if (!isRecordingSupported) {
+      alert('Não é possível gravar áudio nesse navegador')
+      return
+    }
+
+    const audio = await navigator.mediaDevices.getUserMedia({
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+        sampleRate: 44_100
+      }
+    })
+
+    createRecorder(audio)
+
+    intervalRef.current = setInterval(() => {
+      mediaRecorder.current?.stop()
+      createRecorder(audio)
+    }, 5000)
+  }
+
+  async function stopRecording() {
     if (mediaRecorder.current?.state === 'recording') {
       mediaRecorder.current.stop()
+    }
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
     }
 
     const audioBlob = new Blob(audioChunks, { type: 'audio/webm' })
     const formData = new FormData()
     formData.append('audio', audioBlob, 'audio.webm')
 
-    const response = await api.post(`/rooms/${params.roomId}/audio`, formData)
-
-    // biome-ignore lint/suspicious/noConsole: teste
-    console.log(response)
+    await api.post(`/rooms/${params.roomId}/audio`, formData)
   }
 
   useEffect(() => {
     return () => {
       mediaRecorder.current?.stop()
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
     }
   }, [])
 

@@ -22,7 +22,6 @@ const formSchema = z.object({
 type FormSchema = z.infer<typeof formSchema>
 
 export function CreateRoomForm() {
-  // const navigate = useNavigate()
   const { createRoom, isLoading } = useCreateRoom()
 
   const form = useForm<FormSchema>({
@@ -33,6 +32,9 @@ export function CreateRoomForm() {
     }
   })
 
+  const isSubmitting = form.formState.isSubmitting
+  const isDisabled = isSubmitting || isLoading
+
   async function onSubmit(data: FormSchema) {
     await createRoom({
       name: data.name,
@@ -40,7 +42,6 @@ export function CreateRoomForm() {
     })
 
     form.reset()
-    // navigate(`/rooms/${room?.id}`)
   }
 
   return (
@@ -59,7 +60,12 @@ export function CreateRoomForm() {
                 <FormItem>
                   <FormLabel>Nome da sala</FormLabel>
                   <FormControl>
-                    <Input disabled={isLoading} placeholder="Nome da sala" type="text" {...field} />
+                    <Input
+                      disabled={isDisabled}
+                      placeholder="Nome da sala"
+                      type="text"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -73,7 +79,7 @@ export function CreateRoomForm() {
                   <FormLabel>Descrição da sala</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={isLoading}
+                      disabled={isDisabled}
                       placeholder="Descrição da sala"
                       type="text"
                       {...field}
@@ -83,7 +89,7 @@ export function CreateRoomForm() {
                 </FormItem>
               )}
             />
-            <Button disabled={isLoading} type="submit">
+            <Button disabled={isDisabled} type="submit">
               Criar sala
             </Button>
           </form>

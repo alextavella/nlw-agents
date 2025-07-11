@@ -1,7 +1,9 @@
 export type RoomQuestion = {
   id: string
   question: string
+  answer?: string | null
   createdAt: string
+  isGeneratingAnswer?: boolean
 }
 
 export type GetRoomQuestionsResponse = {

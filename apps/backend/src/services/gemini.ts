@@ -12,7 +12,7 @@ export async function transcribeAudio(audioAsBase64: string, mimeType: string) {
     model: model_25_flash,
     contents: [
       {
-        text: 'Transcreva o áudio para português do Brasil. Seja preciso e natural na transcrição. Mantenha a pontuação adequada e divida o texto em paragráfos quando for apropriado.'
+        text: 'Transcreva o áudio para português do Brasil. Seja preciso e natural na transcrição. Mantenha a pontuação adequada e divida o texto em parágrafos quando for apropriado.'
       },
       {
         inlineData: {
@@ -33,7 +33,11 @@ export async function transcribeAudio(audioAsBase64: string, mimeType: string) {
 export async function generateEmbeddings(text: string) {
   const response = await gemini.models.embedContent({
     model: model_text_embedding_004,
-    contents: [text],
+    contents: [
+      {
+        text
+      }
+    ],
     config: {
       taskType: 'RETRIEVAL_DOCUMENT'
     }
@@ -50,22 +54,21 @@ export async function generateAnswer(question: string, chunks: string[]) {
   const context = chunks.join('\n\n')
 
   const prompt = `
-  Com base no contexto abaixo, responda a pergunta de forma clara e objetiva em português do Brasil.
-
-  Contexto:
+  Com base no texto fornecido abaixo como contexto, responda a pergunta de forma clara e precisa em português do Brasil.
+  
+  CONTEXTO:
   ${context}
 
-  Pergunta:
+  PERGUNTA:
   ${question}
 
-  Instruções:
-  - Seja preciso e natural na resposta.
-  - Mantenha a pontuação adequada.
-  - Caso não seja possível responder a pergunta, responda que não há informações suficientes.
-  - Cite trechos relevantes do contexto para justificar a resposta.
-  - Seja claro e conciso.
-  - Seja humano e natural.
-  - Seja objetivo e direto.
+  INSTRUÇÕES:
+  - Use apenas informações contidas no contexto enviado;
+  - Se a resposta não for encontrada no contexto, apenas responda que não possui informações suficientes para responder;
+  - Seja objetivo;
+  - Mantenha um tom educativo e profissional;
+  - Cite trechos relevantes do contexto se apropriado;
+  - Se for citar o contexto, utilize o temo "conteúdo da aula";
   `.trim()
 
   const response = await gemini.models.generateContent({
